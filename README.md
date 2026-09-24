@@ -33,6 +33,25 @@ Custom events fire via `Brevo.push(["track", event_name, properties, event_data]
 | `cart_updated` | An item is added or its quantity changes |
 | `order_created` | The demo "Pay" button completes an order |
 
+### Contact identification & attributes
+
+On waitlist submit and checkout, the site calls `Brevo.identify()`
+([docs](https://developers.brevo.com/docs/identify-users-js)) to bind the visitor's cookie
+to a real contact and set these attributes:
+
+| Attribute | Type | Set on | Example |
+|-----------|------|--------|---------|
+| `FIRSTNAME` / `LASTNAME` | Text | both | (default Brevo attrs) |
+| `PLAN` | Text | both | `waitlist` / `customer` |
+| `SOURCE` | Text | both | `waitlist_page` / `checkout` |
+| `LAST_ORDER_ID` | Text | checkout | `MP-MUFBFHVI` |
+| `LAST_ORDER_TOTAL` | Number | checkout | `63` |
+| `LAST_ORDER_DATE` | Date | checkout | `2026-09-24` |
+| `FAV_PRODUCT` | Text | checkout | `Big Pill Energy Tee` |
+
+> The custom attributes (everything except FIRSTNAME/LASTNAME) must be **created in Brevo first** —
+> Brevo silently ignores attributes that don't exist in the account.
+
 ## Local preview
 
 ```bash

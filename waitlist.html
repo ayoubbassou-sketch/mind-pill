@@ -77,7 +77,13 @@
       if (!email || !firstname) return;
 
       // 1) Identify the visitor -> ties their cookie to a real contact + sets attributes
-      identifyContact(email, { FIRSTNAME: firstname, LASTNAME: lastname });
+      //    Custom attributes (PLAN, SOURCE) must be created in Brevo first, else ignored.
+      identifyContact(email, {
+        FIRSTNAME: firstname,
+        LASTNAME: lastname,
+        PLAN: "waitlist",
+        SOURCE: "waitlist_page"
+      });
 
       // 2) Fire the custom event (now attributed to the identified contact)
       // https://developers.brevo.com/docs/track-custom-events-js

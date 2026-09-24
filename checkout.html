@@ -187,12 +187,23 @@
       if (cartCount() === 0) return;
 
       const orderId = "MP-" + Date.now().toString(36).toUpperCase();
+      const orderTotal = cartTotal() + SHIPPING;
+      const items = cartItems();
+      const favProduct = items.slice().sort((a, b) => b.quantity - a.quantity)[0];
+      const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD for Brevo date attributes
 
-      // 1) Identify the buyer so the order attaches to a real contact
+      // 1) Identify the buyer so the order attaches to a real contact + enrich attributes
+      //    Custom attributes must be created in Brevo first, else ignored.
       // https://developers.brevo.com/docs/identify-users-js
       identifyContact(email, {
         FIRSTNAME: firstname,
-        LASTNAME: document.getElementById("lastname").value.trim()
+        LASTNAME: document.getElementById("lastname").value.trim(),
+        PLAN: "customer",
+        SOURCE: "checkout",
+        LAST_ORDER_ID: orderId,
+        LAST_ORDER_TOTAL: orderTotal,
+        LAST_ORDER_DATE: today,
+        FAV_PRODUCT: favProduct ? favProduct.name : ""
       });
 
       // 2) Fire the purchase event
