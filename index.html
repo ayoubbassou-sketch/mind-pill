@@ -212,7 +212,7 @@
         <div class="cta-band">
           <h2>Ready to upgrade your mind?</h2>
           <p>Join the waitlist for the first batch of MindPill. Side effects may include sudden clarity.</p>
-          <a href="#" class="btn btn-primary" style="font-size: 1.05rem; padding: 14px 32px;">Join the waitlist</a>
+          <a href="#" id="waitlist-btn" class="btn btn-primary" style="font-size: 1.05rem; padding: 14px 32px;">Join the waitlist</a>
         </div>
       </div>
     </section>
@@ -240,5 +240,31 @@
       <p class="disclaimer">MindPill is a fictional product created as a demonstration website. It is not affiliated with Anthropic. No actual pills, implants, or mind-uploads are involved.</p>
     </div>
   </footer>
+
+  <!-- Brevo custom event tracking -->
+  <!-- Docs: https://developers.brevo.com/docs/track-custom-events-js -->
+  <script>
+    (function () {
+      var btn = document.getElementById("waitlist-btn");
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        window.Brevo = window.Brevo || [];
+        // Brevo.push(["track", event_name, properties, event_data])
+        Brevo.push([
+          "track",
+          "waitlist_clicked",            // event_name (mandatory)
+          {},                             // properties (optional) — no email collected yet
+          {                               // event_data (optional)
+            "id": "waitlist:mindpill",
+            "data": {
+              "product": "MindPill",
+              "cta": "Join the waitlist",
+              "url": window.location.href
+            }
+          }
+        ]);
+      });
+    })();
+  </script>
 </body>
 </html>
