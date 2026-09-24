@@ -85,6 +85,26 @@
         product_category: p.category,
         product_found: true
       });
+
+      // Dedicated custom event for product analytics (separate from page views)
+      // https://developers.brevo.com/docs/track-custom-events-js
+      window.Brevo = window.Brevo || [];
+      Brevo.push([
+        "track",
+        "product_viewed",
+        getEmail() ? { email: getEmail() } : {},
+        {
+          id: "product:" + id,
+          data: {
+            product_id: id,
+            product_name: p.name,
+            price: p.price,
+            currency: "USD",
+            category: p.category,
+            url: window.location.href
+          }
+        }
+      ]);
     }
   </script>
 </body>
