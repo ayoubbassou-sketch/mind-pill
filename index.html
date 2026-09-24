@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MindPill — Install Claude in your mind</title>
-  <meta name="description" content="MindPill is the magic pill that installs Claude directly into your mind. One dose. Infinite thoughts. Think alongside the world's most thoughtful AI." />
+  <meta name="description" content="MindPill is the magic pill that installs Claude directly into your mind. One dose. Infinite thoughts." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💊</text></svg>" />
+  <link rel="stylesheet" href="styles.css" />
   <!-- Brevo tracker -->
   <script src="https://cdn.brevo.com/js/sdk-loader.js" async></script>
   <script>
@@ -13,149 +14,20 @@
     window.Brevo = window.Brevo || [];
     Brevo.push([
       "init",
-      {
-        client_key: "xhq5nkaphkwmt2fu1ct4hikz",
-        // Optional: Add other initialization options, see documentation
-      }
+      { client_key: "xhq5nkaphkwmt2fu1ct4hikz" }
     ]);
   </script>
-  <style>
-    :root {
-      --bg: #0b0a1a;
-      --bg-soft: #141230;
-      --card: #1a1836;
-      --text: #ece9ff;
-      --muted: #a29fc9;
-      --accent: #c96442;
-      --accent-2: #7c6cff;
-      --border: #2a2750;
-      --radius: 18px;
-      --maxw: 1080px;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 70% -10%, #241f52 0%, transparent 60%), var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-
-    /* Nav */
-    header {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(12px);
-      background: rgba(11,10,26,0.6);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; letter-spacing: -0.02em; }
-    .brand .dot { font-size: 1.4rem; }
-    .nav-links { display: flex; gap: 28px; align-items: center; }
-    .nav-links a { color: var(--muted); font-size: 0.95rem; transition: color .2s; }
-    .nav-links a:hover { color: var(--text); }
-    .btn {
-      display: inline-block; padding: 11px 22px; border-radius: 999px;
-      font-weight: 600; font-size: 0.95rem; cursor: pointer; border: none;
-      transition: transform .15s ease, box-shadow .2s ease;
-    }
-    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; box-shadow: 0 8px 24px rgba(124,108,255,0.35); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(124,108,255,0.5); }
-    .btn-ghost { background: var(--card); color: var(--text); border: 1px solid var(--border); }
-    .btn-ghost:hover { transform: translateY(-2px); }
-    @media (max-width: 720px) { .nav-links a:not(.btn) { display: none; } }
-
-    /* Hero */
-    .hero { text-align: center; padding: 96px 0 72px; position: relative; }
-    .pill-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--card); border: 1px solid var(--border);
-      padding: 7px 16px; border-radius: 999px; font-size: 0.85rem; color: var(--muted);
-      margin-bottom: 28px;
-    }
-    .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 4.4rem); line-height: 1.05; letter-spacing: -0.03em;
-      font-weight: 800; margin-bottom: 22px;
-    }
-    .hero h1 .grad {
-      background: linear-gradient(135deg, #ffb08a, var(--accent-2));
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .hero p.sub { font-size: clamp(1.05rem, 2.2vw, 1.35rem); color: var(--muted); max-width: 620px; margin: 0 auto 38px; }
-    .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .pill-visual {
-      margin: 60px auto 0; width: 180px; height: 180px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #ffd5c0, var(--accent) 45%, var(--accent-2) 100%);
-      box-shadow: 0 0 80px rgba(124,108,255,0.6), inset 0 0 40px rgba(255,255,255,0.25);
-      display: grid; place-items: center; font-size: 5rem;
-      animation: float 5s ease-in-out infinite;
-    }
-    @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-18px) } }
-
-    /* Sections */
-    section { padding: 80px 0; }
-    .section-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
-    .section-head .eyebrow { color: var(--accent-2); font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.8rem; }
-    .section-head h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -0.02em; margin: 12px 0 14px; }
-    .section-head p { color: var(--muted); font-size: 1.08rem; }
-
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
-    .card {
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 30px; transition: transform .2s ease, border-color .2s ease;
-    }
-    .card:hover { transform: translateY(-4px); border-color: var(--accent-2); }
-    .card .ic { font-size: 2rem; margin-bottom: 16px; }
-    .card h3 { font-size: 1.2rem; margin-bottom: 8px; letter-spacing: -0.01em; }
-    .card p { color: var(--muted); font-size: 0.98rem; }
-
-    /* Steps */
-    .steps { counter-reset: step; display: grid; gap: 20px; max-width: 720px; margin: 0 auto; }
-    .step { display: flex; gap: 20px; align-items: flex-start; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 26px; }
-    .step .num {
-      counter-increment: step; flex: 0 0 auto; width: 42px; height: 42px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      display: grid; place-items: center; font-weight: 800; color: white;
-    }
-    .step .num::before { content: counter(step); }
-    .step h3 { font-size: 1.1rem; margin-bottom: 4px; }
-    .step p { color: var(--muted); font-size: 0.97rem; }
-
-    /* CTA */
-    .cta-band {
-      text-align: center; background: linear-gradient(135deg, rgba(201,100,66,0.15), rgba(124,108,255,0.15));
-      border: 1px solid var(--border); border-radius: 28px; padding: 64px 32px; margin: 20px 0;
-    }
-    .cta-band h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -0.02em; margin-bottom: 14px; }
-    .cta-band p { color: var(--muted); margin-bottom: 30px; font-size: 1.1rem; }
-
-    /* FAQ */
-    .faq { max-width: 720px; margin: 0 auto; }
-    details { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 4px 22px; margin-bottom: 12px; }
-    details summary { cursor: pointer; padding: 18px 0; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-    details summary::-webkit-details-marker { display: none; }
-    details summary::after { content: "+"; color: var(--accent-2); font-size: 1.5rem; }
-    details[open] summary::after { content: "–"; }
-    details p { color: var(--muted); padding: 0 0 20px; }
-
-    footer { border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--muted); font-size: 0.9rem; }
-    footer .disclaimer { max-width: 620px; margin: 14px auto 0; font-size: 0.8rem; opacity: 0.7; }
-  </style>
 </head>
 <body>
   <header>
     <div class="wrap nav">
-      <div class="brand"><span class="dot">💊</span> MindPill</div>
+      <a href="index.html" class="brand"><span class="dot">💊</span> MindPill</a>
       <nav class="nav-links">
         <a href="#features">Features</a>
         <a href="#how">How it works</a>
+        <a href="store.html">Store</a>
         <a href="#faq">FAQ</a>
-        <a href="#get" class="btn btn-primary">Get MindPill</a>
+        <a href="waitlist.html" class="btn btn-primary">Get MindPill</a>
       </nav>
     </div>
   </header>
@@ -167,8 +39,8 @@
         <h1>Install <span class="grad">Claude</span> in your mind.<br />One pill. Infinite thoughts.</h1>
         <p class="sub">MindPill dissolves in seconds and boots the world's most thoughtful AI directly into your consciousness. No screens. No typing. Just think — and think better.</p>
         <div class="hero-cta">
-          <a href="#get" class="btn btn-primary">Take the pill</a>
-          <a href="#how" class="btn btn-ghost">See how it works</a>
+          <a href="waitlist.html" class="btn btn-primary">Take the pill</a>
+          <a href="store.html" class="btn btn-ghost">Shop the merch</a>
         </div>
         <div class="pill-visual">💊</div>
       </div>
@@ -212,7 +84,7 @@
         <div class="cta-band">
           <h2>Ready to upgrade your mind?</h2>
           <p>Join the waitlist for the first batch of MindPill. Side effects may include sudden clarity.</p>
-          <a href="#" id="waitlist-btn" class="btn btn-primary" style="font-size: 1.05rem; padding: 14px 32px;">Join the waitlist</a>
+          <a href="waitlist.html" class="btn btn-primary" style="font-size: 1.05rem; padding: 14px 32px;">Join the waitlist</a>
         </div>
       </div>
     </section>
@@ -225,8 +97,8 @@
         </div>
         <div class="faq">
           <details open><summary>Is this real?</summary><p>No. MindPill is a playful concept site — a fictional product built as a demo landing page. There is no pill, and you cannot (yet) install an AI in your brain. Please don't swallow anything.</p></details>
-          <details><summary>What's actually inside?</summary><p>HTML and CSS. This is a static one-page site hosted on GitHub Pages. The "Claude inside" is aspirational marketing copy.</p></details>
-          <details><summary>Can I edit it?</summary><p>Absolutely. Everything lives in a single <code>index.html</code>. Change the copy, colors, and sections to make it your own.</p></details>
+          <details><summary>What's actually inside?</summary><p>HTML, CSS, and the Brevo web tracker. This is a static site hosted on GitHub Pages. The "Claude inside" is aspirational marketing copy.</p></details>
+          <details><summary>Is the store real?</summary><p>The store and checkout are a demo. No real payment is taken and no card data is stored or sent anywhere — it's here to show the shopping flow and event tracking.</p></details>
           <details><summary>How much does it cost?</summary><p>Free — it's a template. The imaginary pill, however, is priceless.</p></details>
         </div>
       </div>
@@ -235,36 +107,23 @@
 
   <footer>
     <div class="wrap">
-      <div class="brand" style="justify-content: center;"><span class="dot">💊</span> MindPill</div>
+      <a href="index.html" class="brand" style="justify-content: center;"><span class="dot">💊</span> MindPill</a>
       <p style="margin-top: 10px;">A concept landing page. Built for fun.</p>
-      <p class="disclaimer">MindPill is a fictional product created as a demonstration website. It is not affiliated with Anthropic. No actual pills, implants, or mind-uploads are involved.</p>
+      <p class="disclaimer">MindPill is a fictional product created as a demonstration website. It is not affiliated with Anthropic. No actual pills, implants, mind-uploads, or payments are involved.</p>
     </div>
   </footer>
 
-  <!-- Brevo custom event tracking -->
-  <!-- Docs: https://developers.brevo.com/docs/track-custom-events-js -->
+  <!-- Track waitlist CTA clicks -->
   <script>
-    (function () {
-      var btn = document.getElementById("waitlist-btn");
-      if (!btn) return;
-      btn.addEventListener("click", function () {
+    document.querySelectorAll('a[href="waitlist.html"]').forEach(function (a) {
+      a.addEventListener("click", function () {
         window.Brevo = window.Brevo || [];
-        // Brevo.push(["track", event_name, properties, event_data])
-        Brevo.push([
-          "track",
-          "waitlist_clicked",            // event_name (mandatory)
-          {},                             // properties (optional) — no email collected yet
-          {                               // event_data (optional)
-            "id": "waitlist:mindpill",
-            "data": {
-              "product": "MindPill",
-              "cta": "Join the waitlist",
-              "url": window.location.href
-            }
-          }
-        ]);
+        Brevo.push(["track", "waitlist_clicked", {}, {
+          id: "waitlist:mindpill",
+          data: { product: "MindPill", cta: a.textContent.trim(), url: window.location.href }
+        }]);
       });
-    })();
+    });
   </script>
 </body>
 </html>
