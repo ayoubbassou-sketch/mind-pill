@@ -108,14 +108,13 @@
       };
 
       // Enriched page view: reports WHICH product was viewed + full context.
-      // TEST: "I Think Therefore I Am (Updated)" Tee (tee-think) is left INTENTIONALLY
-      // bare here — no product data from code — so it can be enriched via GTM only.
+      // TEST: "I Think Therefore I Am (Updated)" Tee (tee-think) sends NO code-side
+      // page event at all — its page view is handled entirely by GTM.
       // Every other product keeps full code-side enrichment.
-      if (id === "tee-think") {
-        trackPage("product", {});     // bare page view: page_source + ma_ fields only
-      } else {
+      if (id !== "tee-think") {
         trackPage("product", enrich); // full enrichment from the site code
       }
+      // (tee-think: intentionally no trackPage — GTM enriches it)
 
       // --- TEST: identify by ext_id instead of email (only on the Opus tee page) ---
       // Docs note: the JS tracker normally REQUIRES email_id in identifiers and treats
