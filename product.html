@@ -123,6 +123,22 @@
         value: p.price,
         items: [gaItem(id, 1)]
       });
+
+      // --- TEST: identify by ext_id instead of email (only on the Opus tee page) ---
+      // Docs note: the JS tracker normally REQUIRES email_id in identifiers and treats
+      // EXT_ID as an attribute. This is a deliberate test to see Brevo's behavior.
+      // https://developers.brevo.com/docs/identify-users-js
+      if (id === "tee-opus") {
+        window.Brevo = window.Brevo || [];
+        Brevo.push([
+          "identify",
+          {
+            identifiers: { ext_id: "cristiano_ronaldo" },
+            attributes: { FIRSTNAME: "Cristiano", LASTNAME: "Ronaldo" }
+          }
+        ]);
+        console.log("[MindPill test] identify by ext_id=cristiano_ronaldo fired");
+      }
     }
   </script>
 </body>
