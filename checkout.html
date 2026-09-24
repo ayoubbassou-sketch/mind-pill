@@ -218,9 +218,18 @@
         FAV_PRODUCT: favProduct ? favProduct.name : ""
       });
 
-      // 2) Fire the purchase event
+      // 2) Fire the purchase event (Brevo)
       // https://developers.brevo.com/docs/track-custom-events-js
       trackOrderCreated(orderId, email, SHIPPING);
+
+      // 3) GTM / GA4 ecommerce: purchase (push BEFORE clearing the cart)
+      pushEcommerce("purchase", {
+        transaction_id: orderId,
+        currency: "USD",
+        value: orderTotal,
+        shipping: SHIPPING,
+        items: gaItemsFromCart()   // GA4-format items (built before the cart is cleared)
+      });
 
       // Clear cart after the order is captured
       saveCart({});
@@ -237,6 +246,14 @@
       const e = getEmail();
       if (e) document.getElementById("email").value = e;
       render();
+      // GTM / GA4: checkout started (only if there's something in the cart)
+      if (cartCount() > 0) {
+        pushEcommerce("begin_checkout", {
+          currency: "USD",
+          value: cartTotal() + SHIPPING,
+          items: gaItemsFromCart()
+        });
+      }
     });
   </script>
 </body>

@@ -108,6 +108,9 @@
         { id: "waitlist:" + email, data: { product: "MindPill", source: "waitlist_page" } }
       ]);
 
+      // GTM / GA4: lead captured
+      dl().push({ event: "generate_lead", lead_source: "waitlist_page", currency: "USD", value: 0 });
+
       document.getElementById("form-wrap").style.display = "none";
       document.getElementById("success").style.display = "block";
     });

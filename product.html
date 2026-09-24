@@ -116,6 +116,13 @@
           }
         }
       ]);
+
+      // GTM / GA4 ecommerce: product view
+      pushEcommerce("view_item", {
+        currency: "USD",
+        value: p.price,
+        items: [gaItem(id, 1)]
+      });
     }
   </script>
 </body>

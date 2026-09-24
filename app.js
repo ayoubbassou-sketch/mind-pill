@@ -42,6 +42,24 @@ function cartItems(cart) {
   }));
 }
 
+/* ---- Google Tag Manager dataLayer (GA4 ecommerce schema) ----
+   These run alongside the Brevo events so GTM can forward them (GA4, ads, etc.).
+   GA4 ecommerce reference: https://developers.google.com/analytics/devguides/collection/ga4/ecommerce */
+function dl() { window.dataLayer = window.dataLayer || []; return window.dataLayer; }
+
+function gaItem(id, quantity) {
+  const p = PRODUCTS[id] || {};
+  return { item_id: id, item_name: p.name, price: p.price, item_category: p.category, quantity: quantity || 1 };
+}
+function gaItemsFromCart(cart) {
+  cart = cart || getCart();
+  return Object.entries(cart).map(([id, q]) => gaItem(id, q));
+}
+function pushEcommerce(eventName, ecommerce) {
+  dl().push({ ecommerce: null });                  // clear the previous ecommerce object
+  dl().push({ event: eventName, ecommerce: ecommerce });
+}
+
 /* Send an enriched page view with a meaningful name + properties.
    Reserved ma_ keys (ma_title/ma_url/ma_path/ma_referrer) plus any custom props.
    https://developers.brevo.com/docs/track-page-views-js */
@@ -118,14 +136,27 @@ function addToCart(id) {
   const cart = getCart();
   cart[id] = (cart[id] || 0) + 1;
   saveCart(cart);
-  trackCartUpdated();
+  trackCartUpdated();                              // Brevo
+  pushEcommerce("add_to_cart", {                   // GTM / GA4
+    currency: "USD",
+    value: PRODUCTS[id] ? PRODUCTS[id].price : 0,
+    items: [gaItem(id, 1)]
+  });
   updateCartBadges();
 }
 function setQty(id, qty) {
   const cart = getCart();
+  const prev = cart[id] || 0;
   if (qty <= 0) { delete cart[id]; } else { cart[id] = qty; }
   saveCart(cart);
-  trackCartUpdated();
+  trackCartUpdated();                              // Brevo
+  // GTM / GA4: reflect the direction of the change
+  const price = PRODUCTS[id] ? PRODUCTS[id].price : 0;
+  if (qty > prev) {
+    pushEcommerce("add_to_cart", { currency: "USD", value: price, items: [gaItem(id, qty - prev)] });
+  } else if (qty < prev) {
+    pushEcommerce("remove_from_cart", { currency: "USD", value: price, items: [gaItem(id, prev - qty)] });
+  }
   updateCartBadges();
 }
 

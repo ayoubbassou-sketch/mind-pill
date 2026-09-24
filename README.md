@@ -52,6 +52,25 @@ to a real contact and set these attributes:
 > The custom attributes (everything except FIRSTNAME/LASTNAME) must be **created in Brevo first** —
 > Brevo silently ignores attributes that don't exist in the account.
 
+## Google Tag Manager
+
+GTM container **`GTM-P4Z6LJK8`** is installed on every page (head + `<noscript>`).
+Alongside the Brevo events, the site pushes **GA4-style ecommerce events** to `dataLayer`
+([GA4 ecommerce schema](https://developers.google.com/analytics/devguides/collection/ga4/ecommerce))
+so GTM can forward them to GA4, ads pixels, etc.:
+
+| dataLayer `event` | Fires when |
+|-------------------|-----------|
+| `view_item` | A product page is viewed |
+| `add_to_cart` | Item added (store or checkout +) |
+| `remove_from_cart` | Quantity decreased in checkout |
+| `begin_checkout` | Checkout page loads with a non-empty cart |
+| `purchase` | The demo "Pay" completes (with `transaction_id`, `value`, `shipping`, `items`) |
+| `generate_lead` | Waitlist form submitted |
+
+Each ecommerce push is preceded by `dataLayer.push({ ecommerce: null })` to clear the prior object,
+per Google's guidance. The GTM container must be **published** (with tags configured) to act on these.
+
 ## Local preview
 
 ```bash
