@@ -113,8 +113,11 @@
     </div>
   </footer>
 
-  <!-- Track waitlist CTA clicks -->
+  <script src="app.js"></script>
   <script>
+    trackPage("home");   // enriched page view
+
+    // Track waitlist CTA clicks
     document.querySelectorAll('a[href="waitlist.html"]').forEach(function (a) {
       a.addEventListener("click", function () {
         window.Brevo = window.Brevo || [];

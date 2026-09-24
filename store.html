@@ -41,15 +41,18 @@
 
   <script src="app.js"></script>
   <script>
+    trackPage("store");   // enriched page view for the store listing
+
     const grid = document.getElementById("product-grid");
     Object.entries(PRODUCTS).forEach(([id, p]) => {
       const el = document.createElement("div");
       el.className = "product";
+      const href = "product.html?id=" + encodeURIComponent(id);
       el.innerHTML =
-        '<div class="thumb">' + p.emoji + '</div>' +
+        '<a href="' + href + '" class="thumb">' + p.emoji + '</a>' +
         '<div class="body">' +
-          '<h3>' + p.name + '</h3>' +
-          '<p class="desc">Soft-touch unisex tee. Runs true to size.</p>' +
+          '<h3><a href="' + href + '">' + p.name + '</a></h3>' +
+          '<p class="desc">' + p.blurb + '</p>' +
           '<div class="price">$' + p.price + '</div>' +
           '<button class="btn btn-primary" data-add="' + id + '">Add to cart</button>' +
         '</div>';

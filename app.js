@@ -6,12 +6,12 @@ const CART_KEY = "mindpill_cart";
 const EMAIL_KEY = "mindpill_email";
 
 const PRODUCTS = {
-  "tee-think":   { name: "\"I Think Therefore I Am (Updated)\" Tee", price: 29, emoji: "🧠" },
-  "tee-pill":    { name: "Big Pill Energy Tee",                       price: 29, emoji: "💊" },
-  "tee-opus":    { name: "Powered by Opus Tee",                       price: 32, emoji: "⚡" },
-  "tee-dream":   { name: "Debugging In My Sleep Tee",                 price: 29, emoji: "🌙" },
-  "tee-95":      { name: "Fluent in 95 Languages Tee",               price: 32, emoji: "🗣️" },
-  "tee-recall":  { name: "Total Recall Tee",                          price: 29, emoji: "📚" }
+  "tee-think":   { name: "\"I Think Therefore I Am (Updated)\" Tee", price: 29, emoji: "🧠", category: "Tees", blurb: "Descartes, patched. A soft-touch cotton tee for the recently upgraded." },
+  "tee-pill":    { name: "Big Pill Energy Tee",                       price: 29, emoji: "💊", category: "Tees", blurb: "One capsule, infinite confidence. Wear your dose on your chest." },
+  "tee-opus":    { name: "Powered by Opus Tee",                       price: 32, emoji: "⚡", category: "Tees", blurb: "Premium heavyweight tee for those running the latest model inside." },
+  "tee-dream":   { name: "Debugging In My Sleep Tee",                 price: 29, emoji: "🌙", category: "Tees", blurb: "For the ones who ship fixes between REM cycles." },
+  "tee-95":      { name: "Fluent in 95 Languages Tee",               price: 32, emoji: "🗣️", category: "Tees", blurb: "Say it in any tongue. This tee only speaks one: comfort." },
+  "tee-recall":  { name: "Total Recall Tee",                          price: 29, emoji: "📚", category: "Tees", blurb: "Never forget leg day again. Or anything else, ever." }
 };
 
 function getCart() {
@@ -40,6 +40,20 @@ function cartItems(cart) {
     price: PRODUCTS[id] ? PRODUCTS[id].price : 0,
     quantity: q
   }));
+}
+
+/* Send an enriched page view with a meaningful name + properties.
+   Reserved ma_ keys (ma_title/ma_url/ma_path/ma_referrer) plus any custom props.
+   https://developers.brevo.com/docs/track-page-views-js */
+function trackPage(pageName, extraProps) {
+  const props = Object.assign({
+    ma_title: document.title,
+    ma_url: window.location.href,
+    ma_path: window.location.pathname,
+    page_source: "mindpill_site"
+  }, extraProps || {});
+  window.Brevo = window.Brevo || [];
+  Brevo.push(["page", pageName, props]);
 }
 
 /* Identify the visitor so their cookie is tied to a real contact.

@@ -69,6 +69,8 @@
 
   <script src="app.js"></script>
   <script>
+    trackPage("waitlist");   // enriched page view
+
     document.getElementById("waitlist-form").addEventListener("submit", function (e) {
       e.preventDefault();
       const email = document.getElementById("email").value.trim();
