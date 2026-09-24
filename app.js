@@ -42,6 +42,22 @@ function cartItems(cart) {
   }));
 }
 
+/* Identify the visitor so their cookie is tied to a real contact.
+   All subsequent events (page views, cart_updated, order_created) attach to this contact.
+   https://developers.brevo.com/docs/identify-users-js */
+function identifyContact(email, attributes) {
+  if (!email) return;
+  setEmail(email);
+  window.Brevo = window.Brevo || [];
+  Brevo.push([
+    "identify",
+    {
+      identifiers: { email_id: email },
+      attributes: attributes || {}   // FIRSTNAME/LASTNAME exist by default; custom attrs must be created in Brevo first
+    }
+  ]);
+}
+
 /* Fire Brevo "cart_updated" */
 function trackCartUpdated() {
   const cart = getCart();

@@ -186,10 +186,16 @@
       }
       if (cartCount() === 0) return;
 
-      setEmail(email);
       const orderId = "MP-" + Date.now().toString(36).toUpperCase();
 
-      // Brevo custom event for a completed purchase.
+      // 1) Identify the buyer so the order attaches to a real contact
+      // https://developers.brevo.com/docs/identify-users-js
+      identifyContact(email, {
+        FIRSTNAME: firstname,
+        LASTNAME: document.getElementById("lastname").value.trim()
+      });
+
+      // 2) Fire the purchase event
       // https://developers.brevo.com/docs/track-custom-events-js
       trackOrderCreated(orderId, email, SHIPPING);
 

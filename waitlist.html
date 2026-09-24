@@ -76,9 +76,10 @@
       const lastname = document.getElementById("lastname").value.trim();
       if (!email || !firstname) return;
 
-      setEmail(email);
+      // 1) Identify the visitor -> ties their cookie to a real contact + sets attributes
+      identifyContact(email, { FIRSTNAME: firstname, LASTNAME: lastname });
 
-      // Brevo custom event — properties update the contact record.
+      // 2) Fire the custom event (now attributed to the identified contact)
       // https://developers.brevo.com/docs/track-custom-events-js
       window.Brevo = window.Brevo || [];
       Brevo.push([
