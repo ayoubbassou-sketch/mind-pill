@@ -108,27 +108,8 @@
       };
 
       // Enriched page view: reports WHICH product was viewed + full context
+      // (This is the ONLY tracking on product view — no separate custom event.)
       trackPage("product", enrich);
-
-      // Dedicated custom event for product analytics (separate from page views)
-      // https://developers.brevo.com/docs/track-custom-events-js
-      window.Brevo = window.Brevo || [];
-      Brevo.push([
-        "track",
-        "product_viewed",
-        getEmail() ? { email: getEmail() } : {},
-        {
-          id: "product:" + id,
-          data: enrich
-        }
-      ]);
-
-      // GTM / GA4 ecommerce: product view
-      pushEcommerce("view_item", {
-        currency: "USD",
-        value: p.price,
-        items: [gaItem(id, 1)]
-      });
 
       // --- TEST: identify by ext_id instead of email (only on the Opus tee page) ---
       // Docs note: the JS tracker normally REQUIRES email_id in identifiers and treats
